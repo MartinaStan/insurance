@@ -1,6 +1,6 @@
 ﻿using Claims;
 
-namespace Covers.Repositories
+namespace Claims.Repositories
 {
     /// <summary>Provides data access operations for covers</summary>
     public interface ICoversRepository

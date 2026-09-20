@@ -1,13 +1,15 @@
 ﻿namespace Claims.Auditing
-
 {
+    /// <summary>
+    /// Records audit entries by enqueuing them for asynchronous background persistence
+    /// </summary>
     public class Auditer : IAuditer
     {
-        private readonly AuditContext _auditContext;
+        private readonly IAuditQueue _auditQueue;
 
-        public Auditer(AuditContext auditContext)
+        public Auditer(IAuditQueue auditQueue)
         {
-            _auditContext = auditContext;
+            _auditQueue = auditQueue;
         }
 
         public void AuditClaim(string id, string httpRequestType)
@@ -19,10 +21,9 @@
                 ClaimId = id
             };
 
-            _auditContext.Add(claimAudit);
-            _auditContext.SaveChanges();
+            _auditQueue.Enqueue(claimAudit);
         }
-        
+
         public void AuditCover(string id, string httpRequestType)
         {
             var coverAudit = new CoverAudit()
@@ -32,8 +33,7 @@
                 CoverId = id
             };
 
-            _auditContext.Add(coverAudit);
-            _auditContext.SaveChanges();
+            _auditQueue.Enqueue(coverAudit);
         }
     }
 }

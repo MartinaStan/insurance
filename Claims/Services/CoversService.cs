@@ -1,6 +1,5 @@
 ﻿using Claims.Auditing;
 using Claims.Repositories;
-using Covers.Repositories;
 using Claims.Validation;
 
 namespace Claims.Services

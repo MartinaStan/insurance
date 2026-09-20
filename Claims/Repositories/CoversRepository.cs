@@ -1,5 +1,5 @@
 ﻿using Claims.Data;
-using Covers.Repositories;
+using Claims.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Claims.Repositories
