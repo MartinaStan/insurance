@@ -83,13 +83,32 @@ namespace Claims.Services
 
             for (var i = 0; i < insuranceLength; i++)
             {
-                if (i < 30) totalPremium += premiumPerDay;
-                if (i < 180 && coverType == CoverType.Yacht) totalPremium += premiumPerDay - premiumPerDay * 0.05m;
-                else if (i < 180) totalPremium += premiumPerDay - premiumPerDay * 0.02m;
-                if (i < 365 && coverType != CoverType.Yacht) totalPremium += premiumPerDay - premiumPerDay * 0.03m;
-                else if (i < 365) totalPremium += premiumPerDay - premiumPerDay * 0.08m;
+                if (i < 30)
+                {
+                    // First 30 days no discount
+                    totalPremium += premiumPerDay;
+                }
+                else if (i < 180 && coverType == CoverType.Yacht)
+                {
+                    // Days 31–180, Yacht: 5% discount
+                    totalPremium += premiumPerDay - premiumPerDay * 0.05m;
+                }
+                else if (i < 180)
+                {
+                    // Days 31–180, other types: 2% discount
+                    totalPremium += premiumPerDay - premiumPerDay * 0.02m;
+                }
+                else if (i < 365 && coverType != CoverType.Yacht) 
+                {
+                    // Day 181 onward, other types: cumulative 3% discount
+                    totalPremium += premiumPerDay - premiumPerDay * 0.03m;
+                }
+                else if (i < 365)
+                {
+                    // Day 181 onward, Yacht: cumulative 8% discount
+                    totalPremium += premiumPerDay - premiumPerDay * 0.08m;
+                }
             }
-
             return totalPremium;
         }
     }
